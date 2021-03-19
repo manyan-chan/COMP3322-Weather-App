@@ -8,6 +8,7 @@ function main() {
   ndwfRequest();
   wsifRequest();
   aqhiRequest();
+  getLocation();
 }
 
 //fetch current-weather API
@@ -87,8 +88,37 @@ function aqhiRequest() {
 //get user location
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
+    navigator.geolocation.getCurrentPosition(
+      getLocationSuccess,
+      getLocationError
+    );
+  } else {
+    console.log("Your broweser does not support getting geolocation.");
   }
+}
+
+//getLocation:Success
+function getLocationSuccess(loc) {
+  // var coords = loc.coords;
+  rgReuqest(loc.coords);
+}
+
+//getLocation:Error
+function getLocationError(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+//fetch reverseGeolocation API
+function rgReuqest(coords) {
+  let lat = coords.latitude;
+  let lon = coords.longitude;
+  fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+  ).then((response) => {
+    if (response.status == 200) {
+      response.json().then((place) => {
+        console.log(place);
+      });
+    }
+  });
 }
