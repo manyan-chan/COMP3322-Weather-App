@@ -1,0 +1,82 @@
+body {
+  margin: 0 auto;
+  max-width: 720px;
+}
+
+.nightMode {
+  color: white;
+}
+
+#headerBlock {
+  position: relative;
+}
+#headerBlock img{
+  position: absolute;
+  margin: auto;
+}
+
+
+#mainBlockImg {
+  position: relative;
+  width: 720px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center center;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+#icon1 {
+  width: 60px;
+  top: 55px;
+  left: 46px;
+}
+
+#headerBlock p {
+  position: absolute;
+  margin: auto;
+}
+
+#headerBlock p strong {
+  font-size: 40px;
+}
+
+#temperature {
+  top: 55px;
+  left: 135px;
+}
+
+#humidity {
+  top: 55px;
+  left: 285px;
+}
+#rainfall {
+  top: 55px;
+  left: 460px;
+}
+
+#uvIndex{
+  top: 55px;
+  left: 620px;
+}
+
+#humidityIcon {
+  top: 55px;
+  left: 245px;
+  height: 50px;
+}
+#rainIcon {
+  top: 55px;
+  left: 405px;
+  height: 50px;
+}
+#uvIcon{
+  top: 55px;
+  left: 565px;
+  height: 50px;
+}
+
+h2 {
+  position: absolute;
+  margin: 0.5em;
+}
