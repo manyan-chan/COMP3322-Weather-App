@@ -3,13 +3,19 @@ window.onload = main;
 
 //MAIN FUNCTION
 function main() {
-  renderTitleBlock();
-  renderHeader();
-  nightMode();
-  ndwfRequest();
-  wsifRequest();
-  aqhiRequest();
-  getLocation();
+  fetchEveryting().then((value) => {
+    //  value includes:
+    //  cw: currentWeather,
+    //  wf: weatherForecast,
+    //  ws: weatherStation,
+    //  aqhi: aqhi,
+    //  loc: location,
+    console.log(value);
+    renderTitleBlock();
+    renderHeader(value.cw);
+
+    toggleNightMode();
+  });
 }
 
 //SUB FUNCTIONS
@@ -20,47 +26,45 @@ function renderTitleBlock() {
 }
 
 //render header block
-function renderHeader() {
+function renderHeader(cw) {
   createDiv("headerBlock");
-  cwRequest().then((json) => {
-    renderPhoto(json.rainfall);
-    append("headerBlock", "<h2>Hong Kong</h2>");
-    renderDynamicIcon(json.icon);
-    append(
-      "headerBlock",
-      '<p id="temperature"><strong>' + json.temperature + "</strong>°C</p>"
-    );
-    renderIcon(
-      "humidityIcon",
-      "headerBlock",
-      "/images/drop-48.png",
-      "waterdrop-icon"
-    );
-    append(
-      "headerBlock",
-      '<p id="humidity"><strong>' + json.humidity + "</strong>%</p>"
-    );
-    renderIcon(
-      "rainIcon",
-      "headerBlock",
-      "/images/rain-48.png",
-      "umbrella-icon"
-    );
-    append(
-      "headerBlock",
-      '<p id="rainfall"><strong>' + json.rainfall + "</strong>mm</p>"
-    );
-    renderIcon("uvIcon", "headerBlock", "/images/UVindex-48.png", "UV-icon");
-    if (json.UVindex == "") {
-      var uv = 0;
-    } else {
-      var uv = json.UVindex;
-    }
-    append("headerBlock", '<p id="uvIndex"><strong>' + uv + "</strong></p>");
-  });
+  switchPhoto(cw.rainfall.data[13].max);
+  append("headerBlock", "<h2>Hong Kong</h2>");
+  renderWeatherIcon(cw.icon[0]);
+  append(
+    "headerBlock",
+    '<p id="temperature"><strong>' +
+      cw.temperature.data[1].value +
+      "</strong>°C</p>"
+  );
+  renderIcon(
+    "humidityIcon",
+    "headerBlock",
+    "/images/drop-48.png",
+    "waterdrop-icon"
+  );
+  append(
+    "headerBlock",
+    '<p id="humidity"><strong>' + cw.humidity.data[0].value + "</strong>%</p>"
+  );
+  renderIcon("rainIcon", "headerBlock", "/images/rain-48.png", "umbrella-icon");
+  append(
+    "headerBlock",
+    '<p id="rainfall"><strong>' + cw.rainfall.data[13].max + "</strong>mm</p>"
+  );
+  renderIcon("uvIcon", "headerBlock", "/images/UVindex-48.png", "UV-icon");
+  if (cw.uvindex == "") {
+    var uv = 0;
+  } else {
+    var uv = cw.uvindex.data[0].value;
+  }
+  append("headerBlock", '<p id="uvIndex"><strong>' + uv + "</strong></p>");
+  var time = cw.updateTime.substring(11, 16);
+  append("headerBlock", '<p id="updateTime">Last Update: ' + time + "</p>");
 }
+
 //render icon
-function renderDynamicIcon(num) {
+function renderWeatherIcon(num) {
   var img = new Image();
   img.id = "icon1";
   img.alt = "Weather Icon";
@@ -78,7 +82,7 @@ function renderIcon(id, desID, src, alt) {
 }
 
 //switch photos base on time of day and weather
-function renderPhoto(rainfall) {
+function switchPhoto(rainfall) {
   var currentTime = new Date().getHours();
   var day = 7 <= currentTime && currentTime < 18;
   var img = new Image();
@@ -99,7 +103,7 @@ function renderPhoto(rainfall) {
 }
 
 //toggle nightmode
-function nightMode() {
+function toggleNightMode() {
   var currentTime = new Date().getHours();
   var day = 7 <= currentTime && currentTime < 18;
   if (!day) {
@@ -126,120 +130,59 @@ function append2(idName, content) {
 function createDiv(id) {
   document.body.innerHTML += `<div id=${id}></div>`;
 }
-//fetch current-weather API
-function cwRequest() {
-  return fetch(
+
+//fetch EVERYTHING
+async function fetchEveryting() {
+  const currentWeather = await fetch(
     "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en"
   ).then((response) => {
-    if (response.status == 200) {
-      //receive response successfully
-      return response.json().then((WR) => {
-        // 1. temperature value of HKO
-        // 2. humidity value of HKO
-        // 3. the rainfall value of Yau Tsim Mong district
-        // 4. the UVindex level of King’s Park
-        // 5. icon weather icon
-        // 6. updated time
-        // 7. warning
-        // 8. districts' info
-        var ret_object = {
-          temperature: WR.temperature.data[1].value,
-          humidity: WR.humidity.data[0].value,
-          rainfall: WR.rainfall.data[13].max,
-          UVindex: WR.uvindex, //can be empty
-          icon: WR.icon[0],
-          time: WR.updateTime,
-          warning: WR.warningMessage, //can be empty
-          districts: WR.temperature.data,
-        };
-        return ret_object;
-      });
-    }
+    return response.json();
   });
-}
 
-//fetch nine-day-weather-forcast API
-function ndwfRequest() {
-  fetch(
+  const weatherForecast = await fetch(
     "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en"
   ).then((response) => {
-    if (response.status == 200) {
-      //receive response successfully
-      response.json().then((weather) => {
-        //
-        //
-        console.log(weather);
-      });
-    }
+    return response.json();
   });
-}
 
-//fetch weather-station-info API
-function wsifRequest() {
-  fetch(
+  const weatherStation = await fetch(
     "https://ogciopsi.blob.core.windows.net/dataset/weather-station/weather-station-info.json"
   ).then((response) => {
-    if (response.status == 200) {
-      //receive response successfully
-      response.json().then((weather) => {
-        //
-        //
-        console.log(weather);
-      });
-    }
+    return response.json();
   });
-}
-
-//fetch AQHI API
-function aqhiRequest() {
-  fetch("https://dashboard.data.gov.hk/api/aqhi-individual?format=json").then(
-    (response) => {
-      if (response.status == 200) {
-        //receive response successfully
-        response.json().then((weather) => {
-          //
-          //
-          console.log(weather);
-        });
-      }
-    }
-  );
-}
-
-//get user location
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      getLocationSuccess,
-      getLocationError
-    );
-  } else {
-    console.log("Your broweser does not support getting geolocation.");
-  }
-}
-
-//getLocation:Success
-function getLocationSuccess(loc) {
-  // var coords = loc.coords;
-  rgReuqest(loc.coords);
-}
-
-//getLocation:Error
-function getLocationError(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-}
-
-//fetch reverseGeolocation API
-function rgReuqest(coords) {
-  let lat = coords.latitude;
-  let lon = coords.longitude;
-  fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+  const aqhi = await fetch(
+    "https://dashboard.data.gov.hk/api/aqhi-individual?format=json"
   ).then((response) => {
-    if (response.status == 200) {
-      response.json().then((place) => {
-        console.log(place);
+    return response.json();
+  });
+
+  var lat, lon;
+  const location = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      lat = pos.coords.latitude;
+      lon = pos.coords.longitude;
+      fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+      ).then((response) => {
+        resolve(response.json());
       });
-    }
+    });
+  });
+
+  return Promise.all([
+    currentWeather,
+    weatherForecast,
+    weatherStation,
+    aqhi,
+    location,
+  ]).then((value) => {
+    var ret = {
+      cw: value[0],
+      wf: value[1],
+      ws: value[2],
+      aqhi: value[3],
+      loc: value[4],
+    };
+    return ret;
   });
 }
