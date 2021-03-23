@@ -10,9 +10,9 @@ function main({ cw, wf, ws, aqhi, loc }) {
   console.log({ cw, wf, ws, aqhi, loc });
   renderTitleBlock();
   renderHeaderBlock(cw);
-  //renderMyDataBlock(cw, aqhi, loc);
   renderForcast(wf);
   renderTBlock(cw);
+  renderMyDataBlock(cw, aqhi, loc);
   toggleNightMode();
 }
 
@@ -26,8 +26,8 @@ function renderTitleBlock() {
 //render header block
 function renderHeaderBlock(cw) {
   createDiv("headerBlock");
-  switchPhoto(cw.rainfall.data[13].max);
   append("headerBlock", "<h2>Hong Kong</h2>");
+  switchPhoto(cw.rainfall.data[13].max);
   renderBigIcon(cw.icon[0]);
   append(
     "headerBlock",
@@ -61,11 +61,29 @@ function renderHeaderBlock(cw) {
   append("headerBlock", '<p id="updateTime">Last Update: ' + time + "</p>");
 }
 
-//render my Data Block
 function renderMyDataBlock(cw, aqhi, loc) {
   createDiv("myDataBlock");
   append("myDataBlock", "<h2>My Location</h2>");
-  
+  var pos = {
+    longitude: loc.lon,
+    lantitude: loc.lat,
+  };
+  var address = loc.address;
+  var suburb =
+    "suburb" in address
+      ? address.suburb
+      : "borough" in address
+      ? address.borough
+      : "town" in address
+      ? address.town
+      : "unknown";
+  var cityD =
+    "city_district" in address
+      ? address.city_district
+      : "county" in address
+      ? address.county
+      : "unknown";
+  append("myDataBlock",`<p>${cityD} - ${suburb}</p>`);
 }
 
 //render temperatureBlock
@@ -93,7 +111,7 @@ function renderTBlock(cw) {
 
   const changed = document.getElementById('places');
   changed.addEventListener('change',(event)=>{
-    console.log(event);
+    //console.log(event);
     for (key in dict) {
       if (key == event.target.value) {
         var x = document.getElementById('tbTempBlock');
