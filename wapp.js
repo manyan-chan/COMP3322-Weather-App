@@ -1,21 +1,19 @@
-//Start javascript after loading HTML, required so that javascript is loaded after html
-window.onload = main;
+fetchEveryting().then(main);
 
-//MAIN FUNCTION
-function main() {
-  fetchEveryting().then((value) => {
-    //  value includes:
-    //  cw: currentWeather,
-    //  wf: weatherForecast,
-    //  ws: weatherStation,
-    //  aqhi: aqhi,
-    //  loc: location,
-    console.log(value);
-    renderTitleBlock();
-    renderHeader(value.cw);
-
-    toggleNightMode();
-  });
+function main({ cw, wf, ws, aqhi, loc }) {
+  //  value includes:
+  //  cw: currentWeather,
+  //  wf: weatherForecast,
+  //  ws: weatherStation,
+  //  aqhi: aqhi,
+  //  loc: location,
+  console.log({ cw, wf, ws, aqhi, loc });
+  renderTitleBlock();
+  renderHeaderBlock(cw);
+  //renderMyDataBlock(cw, aqhi, loc);
+  renderForcast(wf);
+  renderTBlock(cw);
+  toggleNightMode();
 }
 
 //SUB FUNCTIONS
@@ -26,11 +24,11 @@ function renderTitleBlock() {
 }
 
 //render header block
-function renderHeader(cw) {
+function renderHeaderBlock(cw) {
   createDiv("headerBlock");
   switchPhoto(cw.rainfall.data[13].max);
   append("headerBlock", "<h2>Hong Kong</h2>");
-  renderWeatherIcon(cw.icon[0]);
+  renderBigIcon(cw.icon[0]);
   append(
     "headerBlock",
     '<p id="temperature"><strong>' +
@@ -63,13 +61,100 @@ function renderHeader(cw) {
   append("headerBlock", '<p id="updateTime">Last Update: ' + time + "</p>");
 }
 
+//render my Data Block
+function renderMyDataBlock(cw, aqhi, loc) {
+  createDiv("myDataBlock");
+  append("myDataBlock", "<h2>My Location</h2>");
+  
+}
+
+//render temperatureBlock
+function renderTBlock(cw) {
+  createDiv("tempBlock");
+  append("tempBlock", "<h2>Temperatures</h2>");
+  append("tempBlock", "<p>Select the location</p>");
+  append("tempBlock", "<select id='places'></select>");
+  var list = [];
+  var dict = new Object();
+  for (let index = 0; index < 27; index++) {
+    list.push(cw.temperature.data[index].place);
+    dict[cw.temperature.data[index].place] = cw.temperature.data[index].value;
+  }
+  list.sort();
+  list.forEach((element) => {
+    append("places", `<option>${element}</option>`);
+  });
+  var selcPlace = document.getElementById("places");
+  for (key in dict) {
+    if (key == selcPlace.value) {
+      append("tempBlock", `<p id='tbTempBlock'>${dict[key]}°C</p>`);
+    }
+  }
+
+  const changed = document.getElementById('places');
+  changed.addEventListener('change',(event)=>{
+    console.log(event);
+    for (key in dict) {
+      if (key == event.target.value) {
+        var x = document.getElementById('tbTempBlock');
+        x.innerHTML = `${dict[key]}°C`;
+      }
+    } 
+  })
+}
+
+//render weather forcast
+function renderForcast(wf) {
+  createDiv("weatherForecast");
+  append("weatherForecast", "<h2>9-Day Forcast</h2>");
+  append("weatherForecast", "<div id='flexbox'></div>");
+  wfSubBlock(wf.weatherForecast);
+}
+
+//weatherForecast subBlocks
+function wfSubBlock(wf) {
+  for (const item of wf) {
+    var temp = {
+      week: item.week.substring(0, 3),
+      date: parseDate(item.forecastDate),
+      icon: item.ForecastIcon,
+      temperature: [item.forecastMintemp.value, item.forecastMaxtemp.value],
+      humidity: [item.forecastMinrh.value, item.forecastMaxrh.value],
+    };
+    var elem = document.createElement("div");
+    elem.classList.add("wfSubBlock");
+    elem.innerHTML += `<p>${temp.week} ${temp.date.getDate()}/${
+      temp.date.getMonth() + 1
+    }</p>`;
+    renderSmallIcon(elem, temp.icon);
+    elem.innerHTML += `<p>${temp.temperature[0]}-${temp.temperature[1]} °C</p>`;
+    elem.innerHTML += `<p>${temp.humidity[0]}-${temp.humidity[1]} %</p>`;
+    append2("flexbox", elem);
+  }
+
+  function parseDate(str) {
+    var y = str.substr(0, 4),
+      m = str.substr(4, 2),
+      d = str.substr(6, 2);
+    return new Date(y, m, d);
+  }
+}
+
 //render icon
-function renderWeatherIcon(num) {
+function renderBigIcon(num) {
   var img = new Image();
   img.id = "icon1";
   img.alt = "Weather Icon";
   img.src = `https://www.hko.gov.hk/images/HKOWxIconOutline/pic${num}.png`;
   append2("headerBlock", img);
+}
+
+//render icon
+function renderSmallIcon(div, num) {
+  var img = new Image();
+  img.alt = "Weather Icon";
+  img.src = `https://www.hko.gov.hk/images/HKOWxIconOutline/pic${num}.png`;
+  div.appendChild(img);
 }
 
 //render icon with ID, destination, src and alt
