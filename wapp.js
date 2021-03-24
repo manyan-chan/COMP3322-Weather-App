@@ -91,7 +91,7 @@ function renderTBlock(cw) {
   createDiv("tempBlock");
   append("tempBlock", "<h2>Temperatures</h2>");
   append("tempBlock", "<p>Select the location</p>");
-  append("tempBlock", "<select id='places'name='places'></select>");
+  append("tempBlock", "<select id='places' name='places'></select>");
   var list = [];
   var dict = new Object();
   var leng = Object.keys(cw.temperature.data).length;
@@ -101,7 +101,7 @@ function renderTBlock(cw) {
   }
   list.sort();
   list.forEach((element) => {
-    append("places", `<option>${element}</option>`);
+    append("places", `<option value="${element}">${element}</option>`);
   });
   var selcPlace = document.getElementById("places");
   for (key in dict) {
@@ -109,11 +109,10 @@ function renderTBlock(cw) {
       append("tempBlock", `<p id='tbTempBlock'>${dict[key]}°C</p>`);
     }
   }
-
-  var changed = document.getElementById("places");
-  console.log(changed);
-  changed.addEventListener("change", (event) => {
-    console.log(event);
+  console.log(selcPlace);
+  
+  selcPlace.addEventListener("change", (event) => {
+    console.log(selcPlace.value);
     for (key in dict) {
       if (key == event.target.value) {
         var x = document.getElementById("tbTempBlock");
@@ -151,13 +150,13 @@ function wfSubBlock(wf) {
     elem.innerHTML += `<p>${temp.humidity[0]}-${temp.humidity[1]} %</p>`;
     append2("flexbox", elem);
   }
+}
 
-  function parseDate(str) {
-    var y = str.substr(0, 4),
-      m = str.substr(4, 2),
-      d = str.substr(6, 2);
-    return new Date(y, m, d);
-  }
+function parseDate(str) {
+  var y = str.substr(0, 4),
+    m = str.substr(4, 2),
+    d = str.substr(6, 2);
+  return new Date(y, m, d);
 }
 
 //render icon
