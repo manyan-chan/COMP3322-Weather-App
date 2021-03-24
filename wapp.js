@@ -83,7 +83,7 @@ function renderMyDataBlock(cw, aqhi, loc) {
       : "county" in address
       ? address.county
       : "unknown";
-  append("myDataBlock",`<p>${cityD} - ${suburb}</p>`);
+  append("myDataBlock", `<p>${cityD} - ${suburb}</p>`);
 }
 
 //render temperatureBlock
@@ -91,10 +91,11 @@ function renderTBlock(cw) {
   createDiv("tempBlock");
   append("tempBlock", "<h2>Temperatures</h2>");
   append("tempBlock", "<p>Select the location</p>");
-  append("tempBlock", "<select id='places'></select>");
+  append("tempBlock", "<select id='places'name='places'></select>");
   var list = [];
   var dict = new Object();
-  for (let index = 0; index < 27; index++) {
+  var leng = Object.keys(cw.temperature.data).length;
+  for (let index = 0; index < leng; index++) {
     list.push(cw.temperature.data[index].place);
     dict[cw.temperature.data[index].place] = cw.temperature.data[index].value;
   }
@@ -109,16 +110,17 @@ function renderTBlock(cw) {
     }
   }
 
-  const changed = document.getElementById('places');
-  changed.addEventListener('change',(event)=>{
-    //console.log(event);
+  var changed = document.getElementById("places");
+  console.log(changed);
+  changed.addEventListener("change", (event) => {
+    console.log(event);
     for (key in dict) {
       if (key == event.target.value) {
-        var x = document.getElementById('tbTempBlock');
+        var x = document.getElementById("tbTempBlock");
         x.innerHTML = `${dict[key]}°C`;
       }
-    } 
-  })
+    }
+  });
 }
 
 //render weather forcast
