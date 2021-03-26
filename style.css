@@ -1,170 +1,485 @@
-body {
-  margin: 0 auto;
-  max-width: 720px;
+@media only screen and (min-width: 721px) {
+  body {
+    margin: 0 auto;
+    max-width: 720px;
+  }
+
+  div {
+    height: 150px;
+    width: 720px;
+    position: relative;
+  }
+
+  .nightMode {
+    color: white;
+  }
+
+  #title {
+    height: auto;
+  }
+
+  #headerBlock img {
+    position: absolute;
+    margin: auto;
+    z-index: -1;
+  }
+
+  #mainBlockImg {
+    position: relative;
+    width: 720px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
+
+  #icon1 {
+    width: 60px;
+    top: 55px;
+    left: 46px;
+  }
+
+  #headerBlock p {
+    position: absolute;
+    margin: auto;
+  }
+
+  #headerBlock p strong {
+    font-size: 40px;
+  }
+
+  #temperature {
+    top: 55px;
+    left: 145px;
+  }
+
+  #humidity {
+    top: 55px;
+    left: 295px;
+  }
+  #rainfall {
+    top: 55px;
+    left: 470px;
+  }
+
+  #uvIndex {
+    top: 55px;
+    left: 630px;
+  }
+
+  #updateTime {
+    bottom: 8px;
+    right: 16px;
+  }
+  #humidityIcon {
+    top: 55px;
+    left: 255px;
+    height: 50px;
+  }
+  #rainIcon {
+    top: 55px;
+    left: 415px;
+    height: 50px;
+  }
+  #uvIcon {
+    top: 55px;
+    left: 575px;
+    height: 50px;
+  }
+
+  h2 {
+    margin: 0.5em 0 0 0.5em;
+  }
+
+  #weatherForecast {
+    background: lightslategray;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
+
+  #flexbox {
+    display: flex;
+    top: 42px;
+  }
+
+  .wfSubBlock {
+    padding: 5px;
+    zoom: 0.5;
+    height: auto;
+    display: inline;
+    text-align: center;
+  }
+
+  .wfSubBlock p {
+    margin: 0;
+    font-weight: bold;
+    font-size: larger;
+  }
+
+  #tempBlock {
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    width: 225px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+    float: left;
+  }
+
+  #tempBlock p {
+    margin: 0 15px;
+  }
+
+  #places {
+    top: 70px;
+    left: 15px;
+    position: absolute;
+  }
+
+  #tbTempBlock {
+    font-size: 40px;
+    margin-top: 20px !important;
+    font-weight: bold;
+  }
+  #weatherForecast h2 {
+    position: absolute;
+  }
+
+  span {
+    font-size: medium;
+    font-weight: normal;
+  }
+
+  #myDataBlock {
+    background-color: darkseagreen;
+    float: right;
+    width: 480px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
+
+  #myDataBlock p {
+    margin: 0 15px;
+  }
+
+  #headerBlock h2 {
+    position: absolute;
+  }
+
+  #mdbRain {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+  }
+
+  #first {
+    position: absolute;
+    top: 80px;
+    left: 85px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  #second {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  #aqhiLogo {
+    position: absolute;
+    right: 240px;
+    top: 80px;
+    height: 48px;
+  }
+
+  #aqhiValue {
+    position: absolute;
+    font-size: 35px;
+    left: 240px;
+    font-weight: bold;
+  }
+
+  #aqhiStr {
+    position: absolute;
+    left: 240px;
+    top: 110px;
+  }
+
+  #warning {
+    height: 50px;
+    display: none;
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
+
+  #warning p {
+    position: absolute;
+    left: 15px;
+    font-weight: bolder;
+  }
+
+  #button {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    font-weight: bolder;
+  }
+
+  #headerBlock {
+    margin-bottom: 15px;
+  }
 }
 
-div {
-  height: 150px;
-  width: 720px;
-  position: relative;
-}
+@media only screen and (max-width: 720px) {
+  body {
+    margin:auto;
+    width: 90%
+  }
 
-.nightMode {
-  color: white;
-}
+  div {
+    width: 100%;
+    position: relative;
+  }
 
-#title{
-  height: auto;
-}
+  .nightMode {
+    color: white;
+  }
 
-#headerBlock
-{
-  bottom:15px;
-  
-}
-#headerBlock img {
-  position: absolute;
-  margin: auto;
-  z-index: -1;
-}
+  #title {
+    height: auto;
+  }
 
-#mainBlockImg {
-  position: relative;
-  width: 720px;
-  height: 150px;
-  object-fit: cover;
-  object-position: center center;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow:2px 2px 15px 2px black;
-}
+  #headerBlock img {
+    position: absolute;
+    margin: auto;
+    z-index: -1;
+  }
 
-#icon1 {
-  width: 60px;
-  top: 55px;
-  left: 46px;
-}
+  #mainBlockImg {
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
 
-#headerBlock p {
-  position: absolute;
-  margin: auto;
-}
+  #icon1 {
+    width: 60px;
+    top: 30%;
+    left: 10%;
+  }
 
-#headerBlock p strong {
-  font-size: 40px;
-}
+  #headerBlock p {
+    position: absolute;
+    margin: auto;
+  }
 
-#temperature {
-  top: 55px;
-  left: 145px;
-}
+  #headerBlock p strong {
+    font-size: 40px;
+  }
 
-#humidity {
-  top: 55px;
-  left: 295px;
-}
-#rainfall {
-  top: 55px;
-  left: 470px;
-}
+  #temperature {
+    top: 30%;
+    left: 30%;
+  }
 
-#uvIndex {
-  top: 55px;
-  left: 630px;
-}
+  #humidity {
+    top: 30%;
+    right: 10%;
+  }
+  #rainfall {
+    top: 60%;
+    left: 30%;
+  }
 
-#updateTime {
-  bottom: 8px;
-  right: 16px;
-}
-#humidityIcon {
-  top: 55px;
-  left: 255px;
-  height: 50px;
-}
-#rainIcon {
-  top: 55px;
-  left: 415px;
-  height: 50px;
-}
-#uvIcon {
-  top: 55px;
-  left: 575px;
-  height: 50px;
-}
+  #uvIndex {
+    top: 60%;
+    right: 15%;
+  }
 
-h2 {
-  margin: 0.5em 0 0 0.5em;
-}
+  #updateTime {
+    bottom: 8px;
+    right: 16px;
+  }
+  #humidityIcon {
+    top: 30%;
+    right: 30%;
+    height: 60px;
+  }
+  #rainIcon {
+    top: 60%;
+    left: 10%;
+    height: 60px;
+  }
+  #uvIcon {
+    top: 60%;
+    right: 30%;
+    height: 50px;
+  }
 
-#weatherForecast {
-  background: lightslategray;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  box-shadow:2px 2px 15px 2px black;
-}
+  h2 {
+    margin: 0.5em 0 0 0.5em;
+  }
 
-#flexbox {
-  display: flex;
-  top: 42px;
-}
+  #weatherForecast {
+    background: lightslategray;
+    padding-bottom: 50px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
 
-.wfSubBlock {
-  padding: 5px;
-  zoom: 0.5;
-  height: auto;
-  display: inline;
-  text-align: center;
-}
+  #flexbox {
+    display: flex;
+    top: 42px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-.wfSubBlock p{
-  margin: 0;
-  font-weight: bold;
-  font-size: larger;
-}
+  .wfSubBlock {
+    padding: 5px;
+    zoom: 0.5;
+    height: auto;
+    display: inline;
+    text-align: center;
+    width: auto;
+  }
 
-#tempBlock{
-  background-color:cornflowerblue;
-  border-radius: 10px;
-  width: 225px;
-  box-shadow:2px 2px 15px 2px black;
-  float:left;
-}
+  .wfSubBlock p {
+    margin: 0;
+    font-weight: bold;
+    font-size: larger;
+  }
 
-#tempBlock p{
-  margin: 0 15px;
-}
+  #tempBlock {
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+    margin-bottom: 15px;
+  }
 
-#places{
-  top: 70px;
-  left: 15px;
-  position: absolute;
-}
+  #tempBlock p {
+    margin: 0 15px;
+  }
 
-#tbTempBlock{
-  font-size: 40px;
-  margin-top: 20px !important;
-}
-#weatherForecast h2{
-  position:absolute;
-}
+  #places {
+    left: 15px;
+    position: absolute;
+  }
 
-span{
-  font-size: medium;
-}
+  #tbTempBlock {
+    font-size: 40px;
+    margin-top: 20px !important;
+    font-weight: bold;
+  }
+  #weatherForecast h2 {
+    position: absolute;
+  }
 
-#myDataBlock{
-  background-color:darkseagreen;
-  float: right;
-  width: 480px;
-  border-radius: 10px;
-  box-shadow:2px 2px 15px 2px black;
-}
+  span {
+    font-size: medium;
+    font-weight: normal;
+  }
 
-#myDataBlock p{
-  margin: 0 15px;
-}
+  #myDataBlock {
+    background-color: darkseagreen;
+    height: 150px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
 
-#headerBlock h2{
-  position: absolute;
+  #myDataBlock p {
+    margin: 0 15px;
+  }
+
+  #headerBlock h2 {
+    position: absolute;
+  }
+
+  #mdbRain {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+  }
+
+  #first {
+    position: absolute;
+    top: 80px;
+    left: 85px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  #second {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  #aqhiLogo {
+    position: absolute;
+    right: 130px;
+    top: 80px;
+    height: 48px;
+  }
+
+  #aqhiValue {
+    position: absolute;
+    font-size: 35px;
+    right: 80px;
+    font-weight: bold;
+  }
+
+  #aqhiStr {
+    position: absolute;
+    right: 30px;
+    top: 110px;
+  }
+
+  #warning {
+    height: 50px;
+    display: none;
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  }
+
+  #warning p {
+    position: absolute;
+    left: 15px;
+    font-weight: bolder;
+  }
+
+  #button {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    font-weight: bolder;
+  }
+
+  #headerBlock {
+    margin-bottom: 15px;
+    height: 60vw;
+  }
+
+  #tempBlock h2{
+    padding-top: 0.5em;
+  }
+
+  #myDataBlock h2{
+    padding-top: 0.5em;
+  }
 }
