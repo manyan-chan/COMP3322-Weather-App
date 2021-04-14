@@ -340,7 +340,7 @@ async function fetchEveryting() {
     return response.json();
   });
 
-  const aqhiInfo = await fetch("/data/aqhi-station-info.json").then(
+  const aqhiInfo = await fetch("data/aqhi-station-info.json").then(
     (response) => {
       return response.json();
     }
