@@ -103,20 +103,27 @@
   #flexbox {
     display: flex;
     top: 42px;
+    height: 110px;
+    width: 720px;
+    justify-content:space-between;
   }
 
   .wfSubBlock {
     padding: 5px;
-    zoom: 0.5;
     height: auto;
     display: inline;
     text-align: center;
+    width: auto;
+  }
+
+  .wfSubBlock img{
+    width: 40px;
+    height: 40px;
   }
 
   .wfSubBlock p {
     margin: 0;
-    font-weight: bold;
-    font-size: larger;
+    font-size: medium;
   }
 
   #tempBlock {
@@ -139,7 +146,7 @@
 
   #tbTempBlock {
     font-size: 40px;
-    margin-top: 20px !important;
+    margin-top: 30px !important;
     font-weight: bold;
   }
   #weatherForecast h2 {
@@ -201,6 +208,7 @@
     font-size: 35px;
     left: 240px;
     font-weight: bold;
+    top: 65px;
   }
 
   #aqhiStr {
@@ -409,28 +417,28 @@
   #mdbRain {
     position: absolute;
     top: 80px;
-    left: 50px;
+    left: 20px;
   }
 
   #first {
     position: absolute;
     top: 80px;
-    left: 85px;
+    left: 55px;
     font-size: 40px;
     font-weight: bold;
   }
 
   #second {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    left: 140px;
+    top: 2px;
     font-size: 40px;
     font-weight: bold;
   }
 
   #aqhiLogo {
     position: absolute;
-    right: 130px;
+    left: 130px;
     top: 80px;
     height: 48px;
   }
@@ -438,13 +446,14 @@
   #aqhiValue {
     position: absolute;
     font-size: 35px;
-    right: 80px;
+    left: 180px;
+    bottom: 40px;
     font-weight: bold;
   }
 
   #aqhiStr {
     position: absolute;
-    right: 30px;
+    left: 180px;
     top: 110px;
   }
 

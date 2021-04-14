@@ -61,19 +61,19 @@ function renderHeaderBlock(cw) {
   renderIcon(
     "humidityIcon",
     "headerBlock",
-    "/images/drop-48.png",
+    "images/drop-48.png",
     "waterdrop-icon"
   );
   append(
     "headerBlock",
     `<p id="humidity"><strong>${cw.humidity.data[0].value}</strong><span>%</span></p>`
   );
-  renderIcon("rainIcon", "headerBlock", "/images/rain-48.png", "umbrella-icon");
+  renderIcon("rainIcon", "headerBlock", "images/rain-48.png", "umbrella-icon");
   append(
     "headerBlock",
     `<p id="rainfall"><strong>${cw.rainfall.data[13].max}</strong><span>mm</span></p>`
   );
-  renderIcon("uvIcon", "headerBlock", "/images/UVindex-48.png", "UV-icon");
+  renderIcon("uvIcon", "headerBlock", "images/UVindex-48.png", "UV-icon");
   if (cw.uvindex == "") {
     var uv = 0;
   } else {
@@ -118,7 +118,7 @@ function renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo) {
       : "unknown";
   append("myDataBlock", `<p>${district} - ${suburb}</p>`);
 
-  renderIcon("mdbRain", "myDataBlock", "/images/rain-48.png", "umbrella");
+  renderIcon("mdbRain", "myDataBlock", "mages/rain-48.png", "umbrella");
   for (const item of cw.rainfall.data) {
     if (item.place == district) {
       append("myDataBlock", `<p id='first'>${item.max}<span>mm</span></p>`);
@@ -173,15 +173,15 @@ function renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo) {
       img.id = "aqhiLogo";
       img.src =
         risk == "Very High"
-          ? "/images/aqhi-very_high.png"
+          ? "images/aqhi-very_high.png"
           : risk == "High"
-          ? "/images/aqhi-high.png"
+          ? "images/aqhi-high.png"
           : risk == "Moderate"
-          ? "/images/aqhi-moderate.png"
+          ? "images/aqhi-moderate.png"
           : risk == "Serious"
-          ? "/images/aqhi-serious.png"
+          ? "images/aqhi-serious.png"
           : risk == "Low"
-          ? "/images/aqhi-low.png"
+          ? "images/aqhi-low.png"
           : "undefined";
       img.alt = "aqhi_logo";
       append("myDataBlock", `<p id='aqhiValue'>${value}</p>`);
@@ -294,11 +294,11 @@ function switchPhoto(rainfall) {
   if (rain) {
     //raining
     img.src = day
-      ? "/images/water-drops-glass-day.jpg"
-      : "/images/water-drops-glass-night.jpg";
+      ? "images/water-drops-glass-day.jpg"
+      : "images/water-drops-glass-night.jpg";
   } else {
     //not raining
-    img.src = day ? "/images/blue-sky.jpg" : "/images/night-sky.jpg";
+    img.src = day ? "images/blue-sky.jpg" : "images/night-sky.jpg";
   }
   append2("headerBlock", img);
 }
