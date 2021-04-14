@@ -18,6 +18,7 @@ function main({ cw, wf, ws, aqhi, loc, aqhiInfo }) {
   renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo);
   toggleNightMode();
 
+  
   //event handler
   var selcPlace = document.getElementById('places');
   selcPlace.addEventListener('change', (event) => {
