@@ -1,4 +1,6 @@
-fetchEveryting().then(main);
+window.onload = function () {
+  fetchEveryting().then(main);
+};
 
 function main({ cw, wf, ws, aqhi, loc, aqhiInfo }) {
   //  value includes:
@@ -17,25 +19,25 @@ function main({ cw, wf, ws, aqhi, loc, aqhiInfo }) {
   toggleNightMode();
 
   //event handler
-  var selcPlace = document.getElementById("places");
-  selcPlace.addEventListener("change", (event) => {
+  var selcPlace = document.getElementById('places');
+  selcPlace.addEventListener('change', (event) => {
     for (key of cw.temperature.data) {
       //console.log(key.place, event.target.value)
       if (key.place == event.target.value) {
-        var x = document.getElementById("tbTempBlock");
+        var x = document.getElementById('tbTempBlock');
         x.innerHTML = `${key.value}<span>°C</span>`;
       }
     }
   });
 
-  var button = document.getElementById("button");
+  var button = document.getElementById('button');
   if (button != null) {
-    button.addEventListener("click", () => {
-      var x = document.getElementById("warning");
-      if (x.style.display === "none") {
-        x.style.display = "block";
+    button.addEventListener('click', () => {
+      var x = document.getElementById('warning');
+      if (x.style.display === 'none') {
+        x.style.display = 'block';
       } else {
-        x.style.display = "none";
+        x.style.display = 'none';
       }
     });
   }
@@ -44,84 +46,84 @@ function main({ cw, wf, ws, aqhi, loc, aqhiInfo }) {
 //SUB FUNCTIONS
 //render title block
 function renderTitleBlock() {
-  createDiv("title");
-  append("title", "<h1>My Weather Portal</h1>");
+  createDiv('title');
+  append('title', '<h1>My Weather Portal</h1>');
 }
 
 //render header block
 function renderHeaderBlock(cw) {
-  createDiv("headerBlock");
-  append("headerBlock", "<h2>Hong Kong</h2>");
+  createDiv('headerBlock');
+  append('headerBlock', '<h2>Hong Kong</h2>');
   switchPhoto(cw.rainfall.data[13].max);
   renderBigIcon(cw.icon[0]);
   append(
-    "headerBlock",
+    'headerBlock',
     `<p id="temperature"><strong>${cw.temperature.data[1].value}</strong><span>°C</span></p>`
   );
   renderIcon(
-    "humidityIcon",
-    "headerBlock",
-    "images/drop-48.png",
-    "waterdrop-icon"
+    'humidityIcon',
+    'headerBlock',
+    'images/drop-48.png',
+    'waterdrop-icon'
   );
   append(
-    "headerBlock",
+    'headerBlock',
     `<p id="humidity"><strong>${cw.humidity.data[0].value}</strong><span>%</span></p>`
   );
-  renderIcon("rainIcon", "headerBlock", "images/rain-48.png", "umbrella-icon");
+  renderIcon('rainIcon', 'headerBlock', 'images/rain-48.png', 'umbrella-icon');
   append(
-    "headerBlock",
+    'headerBlock',
     `<p id="rainfall"><strong>${cw.rainfall.data[13].max}</strong><span>mm</span></p>`
   );
-  renderIcon("uvIcon", "headerBlock", "images/UVindex-48.png", "UV-icon");
-  if (cw.uvindex == "") {
+  renderIcon('uvIcon', 'headerBlock', 'images/UVindex-48.png', 'UV-icon');
+  if (cw.uvindex == '') {
     var uv = 0;
   } else {
     var uv = cw.uvindex.data[0].value;
   }
-  append("headerBlock", `<p id="uvIndex"><strong>${uv}</strong></p>`);
+  append('headerBlock', `<p id="uvIndex"><strong>${uv}</strong></p>`);
   var time = cw.updateTime.substring(11, 16);
-  append("headerBlock", `<p id="updateTime">Last Update: ${time}</p>`);
+  append('headerBlock', `<p id="updateTime">Last Update: ${time}</p>`);
 }
 
 function renderWarningBlock(cw) {
   var warning = cw.warningMessage;
-  var warningBool = warning == "" ? false : true;
+  var warningBool = warning == '' ? false : true;
   if (warningBool == true) {
-    append("headerBlock", "<button type='button' id='button'>Warning</button>");
-    createDiv("warning");
-    append("warning", `<p>${warning}</p>`);
+    append('headerBlock', "<button type='button' id='button'>Warning</button>");
+    createDiv('warning');
+    append('warning', `<p>${warning}</p>`);
   }
 }
 
 function renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo) {
-  createDiv("myDataBlock");
-  append("myDataBlock", "<h2>My Location</h2>");
+  createDiv('myDataBlock');
+  append('myDataBlock', '<h2>My Location</h2>');
   var pos = {
     longitude: (loc.lon * Math.PI) / 180,
     latitude: (loc.lat * Math.PI) / 180,
   };
   var address = loc.address;
   var suburb =
-    "suburb" in address
+    'suburb' in address
       ? address.suburb
-      : "borough" in address
+      : 'borough' in address
       ? address.borough
-      : "town" in address
+      : 'town' in address
       ? address.town
-      : "unknown";
+      : 'unknown';
   var district =
-    "city_district" in address
+    'city_district' in address
       ? address.city_district
-      : "county" in address
+      : 'county' in address
       ? address.county
-      : "unknown";
-  append("myDataBlock", `<p>${district} - ${suburb}</p>`);
+      : 'unknown';
+  append('myDataBlock', `<p>${district} - ${suburb}</p>`);
 
-  renderIcon("mdbRain", "myDataBlock", "mages/rain-48.png", "umbrella");
+  renderIcon('mdbRain', 'myDataBlock', 'mages/rain-48.png', 'umbrella');
   for (const item of cw.rainfall.data) {
     if (item.place == district) {
-      append("myDataBlock", `<p id='first'>${item.max}<span>mm</span></p>`);
+      append('myDataBlock', `<p id='first'>${item.max}<span>mm</span></p>`);
     }
   }
   var min = 100;
@@ -144,7 +146,7 @@ function renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo) {
   }
   for (const item of cw.temperature.data) {
     if (item.place == closest_station) {
-      append("myDataBlock", `<p id='second'>${item.value}<span>°C</span></p>`);
+      append('myDataBlock', `<p id='second'>${item.value}<span>°C</span></p>`);
     }
   }
 
@@ -170,33 +172,33 @@ function renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo) {
       var value = item.aqhi;
       var risk = item.health_risk;
       var img = new Image();
-      img.id = "aqhiLogo";
+      img.id = 'aqhiLogo';
       img.src =
-        risk == "Very High"
-          ? "images/aqhi-very_high.png"
-          : risk == "High"
-          ? "images/aqhi-high.png"
-          : risk == "Moderate"
-          ? "images/aqhi-moderate.png"
-          : risk == "Serious"
-          ? "images/aqhi-serious.png"
-          : risk == "Low"
-          ? "images/aqhi-low.png"
-          : "undefined";
-      img.alt = "aqhi_logo";
-      append("myDataBlock", `<p id='aqhiValue'>${value}</p>`);
-      append("myDataBlock", `<p id='aqhiStr'>${risk}</p>`);
-      append2("myDataBlock", img);
+        risk == 'Very High'
+          ? 'images/aqhi-very_high.png'
+          : risk == 'High'
+          ? 'images/aqhi-high.png'
+          : risk == 'Moderate'
+          ? 'images/aqhi-moderate.png'
+          : risk == 'Serious'
+          ? 'images/aqhi-serious.png'
+          : risk == 'Low'
+          ? 'images/aqhi-low.png'
+          : 'undefined';
+      img.alt = 'aqhi_logo';
+      append('myDataBlock', `<p id='aqhiValue'>${value}</p>`);
+      append('myDataBlock', `<p id='aqhiStr'>${risk}</p>`);
+      append2('myDataBlock', img);
     }
   }
 }
 
 //render temperatureBlock
 function renderTBlock(cw) {
-  createDiv("tempBlock");
-  append("tempBlock", "<h2>Temperatures</h2>");
-  append("tempBlock", "<p>Select the location</p>");
-  append("tempBlock", "<select id='places' name='places'></select>");
+  createDiv('tempBlock');
+  append('tempBlock', '<h2>Temperatures</h2>');
+  append('tempBlock', '<p>Select the location</p>');
+  append('tempBlock', "<select id='places' name='places'></select>");
   var list = [];
   var dict = new Object();
   var leng = Object.keys(cw.temperature.data).length;
@@ -206,13 +208,13 @@ function renderTBlock(cw) {
   }
   list.sort();
   list.forEach((element) => {
-    append("places", `<option value="${element}">${element}</option>`);
+    append('places', `<option value="${element}">${element}</option>`);
   });
-  var selcPlace = document.getElementById("places");
+  var selcPlace = document.getElementById('places');
   for (key in dict) {
     if (key == selcPlace.value) {
       append(
-        "tempBlock",
+        'tempBlock',
         `<p id='tbTempBlock'>${dict[key]}<span>°C</span></p>`
       );
     }
@@ -221,9 +223,9 @@ function renderTBlock(cw) {
 
 //render weather forcast
 function renderForcast(wf) {
-  createDiv("weatherForecast");
-  append("weatherForecast", "<h2>9-Day Forcast</h2>");
-  append("weatherForecast", "<div id='flexbox'></div>");
+  createDiv('weatherForecast');
+  append('weatherForecast', '<h2>9-Day Forcast</h2>');
+  append('weatherForecast', "<div id='flexbox'></div>");
   wfSubBlock(wf.weatherForecast);
 }
 
@@ -237,15 +239,15 @@ function wfSubBlock(wf) {
       temperature: [item.forecastMintemp.value, item.forecastMaxtemp.value],
       humidity: [item.forecastMinrh.value, item.forecastMaxrh.value],
     };
-    var elem = document.createElement("div");
-    elem.classList.add("wfSubBlock");
+    var elem = document.createElement('div');
+    elem.classList.add('wfSubBlock');
     elem.innerHTML += `<p>${temp.week} ${temp.date.getDate()}/${
       temp.date.getMonth() + 1
     }</p>`;
     renderSmallIcon(elem, temp.icon);
     elem.innerHTML += `<p>${temp.temperature[0]}-${temp.temperature[1]} °C</p>`;
     elem.innerHTML += `<p>${temp.humidity[0]}-${temp.humidity[1]} %</p>`;
-    append2("flexbox", elem);
+    append2('flexbox', elem);
   }
 }
 
@@ -259,16 +261,16 @@ function parseDate(str) {
 //render icon
 function renderBigIcon(num) {
   var img = new Image();
-  img.id = "icon1";
-  img.alt = "Weather Icon";
+  img.id = 'icon1';
+  img.alt = 'Weather Icon';
   img.src = `https://www.hko.gov.hk/images/HKOWxIconOutline/pic${num}.png`;
-  append2("headerBlock", img);
+  append2('headerBlock', img);
 }
 
 //render icon
 function renderSmallIcon(div, num) {
   var img = new Image();
-  img.alt = "Weather Icon";
+  img.alt = 'Weather Icon';
   img.src = `https://www.hko.gov.hk/images/HKOWxIconOutline/pic${num}.png`;
   div.appendChild(img);
 }
@@ -287,20 +289,20 @@ function switchPhoto(rainfall) {
   var currentTime = new Date().getHours();
   var day = 7 <= currentTime && currentTime < 18;
   var img = new Image();
-  img.id = "mainBlockImg";
-  img.alt = "background image of main block";
+  img.id = 'mainBlockImg';
+  img.alt = 'background image of main block';
 
   var rain = rainfall > 0;
   if (rain) {
     //raining
     img.src = day
-      ? "images/water-drops-glass-day.jpg"
-      : "images/water-drops-glass-night.jpg";
+      ? 'images/water-drops-glass-day.jpg'
+      : 'images/water-drops-glass-night.jpg';
   } else {
     //not raining
-    img.src = day ? "images/blue-sky.jpg" : "images/night-sky.jpg";
+    img.src = day ? 'images/blue-sky.jpg' : 'images/night-sky.jpg';
   }
-  append2("headerBlock", img);
+  append2('headerBlock', img);
 }
 
 //toggle nightmode
@@ -308,9 +310,9 @@ function toggleNightMode() {
   var currentTime = new Date().getHours();
   var day = 7 <= currentTime && currentTime < 18;
   if (!day) {
-    var x = document.getElementsByTagName("div");
+    var x = document.getElementsByTagName('div');
     for (let index = 1; index < x.length; index++) {
-      x[index].classList.toggle("nightMode");
+      x[index].classList.toggle('nightMode');
     }
   }
 }
@@ -335,30 +337,30 @@ function createDiv(id) {
 //fetch EVERYTHING
 async function fetchEveryting() {
   const currentWeather = await fetch(
-    "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en"
+    'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en'
   ).then((response) => {
     return response.json();
   });
 
-  const aqhiInfo = await fetch("data/aqhi-station-info.json").then(
+  const aqhiInfo = await fetch('data/aqhi-station-info.json').then(
     (response) => {
       return response.json();
     }
   );
 
   const weatherForecast = await fetch(
-    "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en"
+    'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en'
   ).then((response) => {
     return response.json();
   });
 
   const weatherStation = await fetch(
-    "https://ogciopsi.blob.core.windows.net/dataset/weather-station/weather-station-info.json"
+    'https://ogciopsi.blob.core.windows.net/dataset/weather-station/weather-station-info.json'
   ).then((response) => {
     return response.json();
   });
   const aqhi = await fetch(
-    "https://dashboard.data.gov.hk/api/aqhi-individual?format=json"
+    'https://dashboard.data.gov.hk/api/aqhi-individual?format=json'
   ).then((response) => {
     return response.json();
   });
