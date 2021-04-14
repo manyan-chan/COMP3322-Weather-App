@@ -120,7 +120,7 @@ function renderMyDataBlock(cw, aqhi, loc, ws, aqhiInfo) {
       : 'unknown';
   append('myDataBlock', `<p>${district} - ${suburb}</p>`);
 
-  renderIcon('mdbRain', 'myDataBlock', 'mages/rain-48.png', 'umbrella');
+  renderIcon('mdbRain', 'myDataBlock', 'images/rain-48.png', 'umbrella');
   for (const item of cw.rainfall.data) {
     if (item.place == district) {
       append('myDataBlock', `<p id='first'>${item.max}<span>mm</span></p>`);
